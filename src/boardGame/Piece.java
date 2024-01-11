@@ -3,8 +3,8 @@ package boardGame;
 //Declarando a classe principal, peça do tabuleiro.
 public class Piece {
 
-	protected Position position;
-	private Board board;
+	protected Position position; // Atributo do tipo classe "Position".
+	private Board board; // Atributo do tipo classe "Board".
 	
 	// Construtor referenciando o atributo board. 
 	public Piece(Board board) {

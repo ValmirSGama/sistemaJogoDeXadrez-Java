@@ -5,7 +5,7 @@ public class Board {
 
 	private int rows;
 	private int columns;
-	private Piece[][] pieces;
+	private Piece[][] pieces; // Declarando uma matriz do tipo classe "Piece". 
 	
 	// Construtor referenciando os atributos rows e columns; 
 	public Board(int rows, int columns) {
@@ -30,5 +30,15 @@ public class Board {
 
 	public void setColumns(int columns) {
 		this.columns = columns;
+	}
+	
+	// Método para retornar uma peça dado uma linha e uma coluna.
+	public Piece piece(int row, int column) {
+		return pieces[row][column];
+	}
+	
+	// Sobrecarga do método "Piece" recebendo o tipo classe "Position" como argumento.
+	public Piece piece(Position position) {
+		return pieces[position.getRow()][position.getColumn()];
 	}
 }
