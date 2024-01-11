@@ -1,5 +1,6 @@
 package boardGame;
 
+//Declarando a classe principal, posição do tabuleiro.
 public class Position {
 
 	private int row;
