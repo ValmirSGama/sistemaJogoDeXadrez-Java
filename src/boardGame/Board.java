@@ -52,6 +52,20 @@ public class Board {
 		piece.position = position;
 	}
 	
+	// Método para remover uma peça.
+	public Piece removePiece(Position position) {
+		if(!positionExists(position)) { // Condição defensiva.
+			throw new BoardException("Position not on the board");
+		}
+		if(piece(position) == null) {
+			return null;
+		}
+		Piece aux = piece(position);
+		aux.position = null;
+		pieces[position.getRow()][position.getColumn()] = null;
+		return aux;
+	}
+	
 	// Método que aucilia verificar se há posição.
 	private boolean positionExists(int row, int column) {
 		return row >= 0 && row < rows && column < columns;
