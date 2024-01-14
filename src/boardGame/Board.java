@@ -35,7 +35,7 @@ public class Board {
 		return pieces[row][column];
 	}
 	
-	// Sobrecarga do método "Piece" recebendo o tipo classe "Position" como argumento.
+	// Método "Piece" recebendo o tipo classe "Position" como argumento.
 	public Piece piece(Position position) {
 		if(!positionExists(position)) {// Condição defensiva.
 			throw new BoardException("Position not on the board");
@@ -68,11 +68,11 @@ public class Board {
 	
 	// Método que aucilia verificar se há posição.
 	private boolean positionExists(int row, int column) {
-		return row >= 0 && row < rows && column < columns;
+		return row >= 0 && row < rows && column >= 0 && column < columns;
 	}
 	
 	// Método que verifica se há posição.
-	private boolean positionExists(Position position) {
+	public boolean positionExists(Position position) {
 		return positionExists(position.getRow(), position.getColumn());
 	}
 	

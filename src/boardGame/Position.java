@@ -29,6 +29,12 @@ public class Position {
 		this.column = column;
 	}
 	
+	// Método para receber novos valores para linhas e colunas.
+		public void setValues(int row, int column) {
+			this.row = row;
+			this.column = column;
+		}
+	
 	// Método toString.
 	@Override
 	public String toString() {

@@ -33,6 +33,7 @@ public class ChessMatch {
 		Position source = soursePosition.toPosition();
 		Position target = targetPosition.toPosition();
 		validateSourcePosition(source);
+		validateTargetPosition(source, target);
 		Piece capturedPiece = makeMove(source, target);
 		return (ChessPiece)capturedPiece;
 	}
@@ -45,13 +46,20 @@ public class ChessMatch {
 		return capturedPiece;
 	}
 	
-	// Método para a posição de origem.
+	// Método para validar a posição de origem.
 	private void validateSourcePosition(Position position) {
 		if(!board.thereIsPiece(position)) {
 			throw new ChessException("There is no piece on source position");
 		}
 		if(!board.piece(position).isThereAnyPossibleMovie()) {
 			throw new ChessException("There is no possible moves for the piece");
+		}
+	}
+	
+	// Método para validar a posição de destino.
+	private void validateTargetPosition(Position source, Position target) {
+		if(!board.piece(source).possibleMoves(target)) {
+			throw new ChessException("The chosen piece can't move to target position");
 		}
 	}
 	
