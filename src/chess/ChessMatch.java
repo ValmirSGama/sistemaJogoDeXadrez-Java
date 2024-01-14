@@ -50,6 +50,9 @@ public class ChessMatch {
 		if(!board.thereIsPiece(position)) {
 			throw new ChessException("There is no piece on source position");
 		}
+		if(!board.piece(position).isThereAnyPossibleMovie()) {
+			throw new ChessException("There is no possible moves for the piece");
+		}
 	}
 	
 	// Método que recebe as coordenadas do xadrez.

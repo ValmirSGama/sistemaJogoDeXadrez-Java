@@ -4,7 +4,7 @@ import boardGame.Board;
 import boardGame.Piece;
 
 // Declarando a classe peça de xadrez.
-public class ChessPiece extends Piece{
+public abstract class ChessPiece extends Piece{
 
 	private Color color; // Atributo do tipo enumerado "Color".
 

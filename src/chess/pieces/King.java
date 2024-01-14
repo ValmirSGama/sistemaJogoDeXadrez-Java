@@ -17,4 +17,11 @@ public class King extends ChessPiece{
 	public String toString() {
 		return "K";
 	}
+
+	// Sobreposição e implementação do método possibleMoves da classe Piece.
+	@Override
+	public boolean[][] possibleMoves() {
+		boolean[][] mat = new boolean[getBoard().getRows()][getBoard().getColumns()];
+		return mat;
+	}
 }
