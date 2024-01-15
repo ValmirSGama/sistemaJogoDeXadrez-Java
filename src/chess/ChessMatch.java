@@ -17,6 +17,7 @@ public class ChessMatch {
 	private Color currentPlayer;
 	private Board board; // Atributo do tipo classe "Board".
 	private boolean check;
+	private boolean checkMate;
 
 	// Instanciação de listas para peças no tabuleiro e peças capturadas respectivamente.
 	private List<Piece> piecesOnTheBoard = new ArrayList<>();
@@ -30,7 +31,7 @@ public class ChessMatch {
 		initialSetup();
 	}
 	
-	// Métodos Getters para acessar os atributos turn currentPlayer e check;
+	// Métodos Getters para acessar os atributos turn, currentPlayer, check e checkMate;
 	public int getTurn() {
 		return turn;
 	}
@@ -41,6 +42,10 @@ public class ChessMatch {
 	
 	public boolean getCheck() {
 		return check;
+	}
+	
+	public boolean getCheckMate() {
+		return checkMate;
 	}
 	
 	// Método que retorna a matriz de peças da partida de xadrez.
@@ -78,8 +83,16 @@ public class ChessMatch {
 		// Expressão ternária para dizer se está ou não em cheque.
 		check = (testCheck(opponent(currentPlayer)))? true : false;
 		
-		nextTurn();
+		// Condição que testa se está em chequemate.
+		if(testCheckMate(opponent(currentPlayer))) {
+			checkMate = true;
+		}
+		else {
+			nextTurn();
+		}
+		
 		return (ChessPiece)capturedPiece;
+		
 	}
 	
 	// Método para fazer o movimento.
@@ -163,26 +176,45 @@ public class ChessMatch {
 		return false;
 	}
 	
+	// Método que verifica se o rei está em chequemate.
+	private boolean testCheckMate(Color color) {
+		if(!testCheck(color)) {
+			return false;
+		}
+		List<Piece> list = piecesOnTheBoard.stream().filter(x -> ((ChessPiece)x).getColor() == color).collect(Collectors.toList());
+		for(Piece p : list) {
+			boolean[][] mat = p.possibleMoves();
+			for(int i=0; i<board.getRows(); i++) {
+				for(int j=0; j<board.getColumns(); j++) {
+					if(mat[i][j]) {
+						Position source = ((ChessPiece)p).getChessPosition().toPosition();
+						Position target = new Position(i, j);
+						Piece capturedPiece = makeMove(source, target);
+						boolean testCheck = testCheck(color);
+						undoMove(source, target, capturedPiece);
+						if(!testCheck) {
+							return false;
+						}
+					}
+				}
+			}
+		}
+		return true;
+	}
+	
 	// Método que recebe as coordenadas do xadrez.
 	private void placeNewPiece(char column, int row, ChessPiece piece) {
 		board.placePiece(piece, new ChessPosition(column, row).toPosition());
 		piecesOnTheBoard.add(piece);
 	}
-	
+
 	// Método responsável por iniciar a partida de xadrez.
 	private void initialSetup() {
-		placeNewPiece('c', 1, new Rook(board, Color.WHITE));
-        placeNewPiece('c', 2, new Rook(board, Color.WHITE));
-        placeNewPiece('d', 2, new Rook(board, Color.WHITE));
-        placeNewPiece('e', 2, new Rook(board, Color.WHITE));
-        placeNewPiece('e', 1, new Rook(board, Color.WHITE));
-        placeNewPiece('d', 1, new King(board, Color.WHITE));
-
-        placeNewPiece('c', 7, new Rook(board, Color.BLACK));
-        placeNewPiece('c', 8, new Rook(board, Color.BLACK));
-        placeNewPiece('d', 7, new Rook(board, Color.BLACK));
-        placeNewPiece('e', 7, new Rook(board, Color.BLACK));
-        placeNewPiece('e', 8, new Rook(board, Color.BLACK));
-        placeNewPiece('d', 8, new King(board, Color.BLACK));
+		placeNewPiece('h', 7, new Rook(board, Color.WHITE));
+		placeNewPiece('d', 1, new Rook(board, Color.WHITE));
+		placeNewPiece('e', 1, new King(board, Color.WHITE));
+		
+		placeNewPiece('b', 8, new Rook(board, Color.BLACK));
+		placeNewPiece('a', 8, new King(board, Color.BLACK));
 	}
 }
