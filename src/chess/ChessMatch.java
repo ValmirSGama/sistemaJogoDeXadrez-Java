@@ -9,12 +9,25 @@ import chess.pieces.Rook;
 // Declarando a classe partida de xadrez.
 public class ChessMatch {
 
+	private int turn;
+	private Color currentPlayer;
 	private Board board; // Atributo do tipo classe "Board".
 	
 	// Construtor que define a dimensão do tabuleiro de xadrex e recebe o método iniciar. 
 	public ChessMatch() {
 		board = new Board(8, 8);
+		turn = 1;
+		currentPlayer = Color.WHITE;
 		initialSetup();
+	}
+	
+	// Métodos Getters para acessar os atributos turn e currentPlayer;
+	public int getTurn() {
+		return turn;
+	}
+	
+	public Color getCurrentPlayer() {
+		return currentPlayer;
 	}
 	
 	// Método que retorna a matriz de peças da partida de xadrez.
@@ -42,6 +55,7 @@ public class ChessMatch {
 		validateSourcePosition(source);
 		validateTargetPosition(source, target);
 		Piece capturedPiece = makeMove(source, target);
+		nextTurn();
 		return (ChessPiece)capturedPiece;
 	}
 	
@@ -58,6 +72,9 @@ public class ChessMatch {
 		if(!board.thereIsPiece(position)) {
 			throw new ChessException("There is no piece on source position");
 		}
+		if(currentPlayer != ((ChessPiece)board.piece(position)).getColor()) {
+			throw new ChessException("The chosen piece is not yours");
+		}
 		if(!board.piece(position).isThereAnyPossibleMovie()) {
 			throw new ChessException("There is no possible moves for the piece");
 		}
@@ -68,6 +85,12 @@ public class ChessMatch {
 		if(!board.piece(source).possibleMoves(target)) {
 			throw new ChessException("The chosen piece can't move to target position");
 		}
+	}
+	
+	private void nextTurn() {
+		turn++;
+		// Variável "currentPlayer" recebendo uma expressão conticional ternária.
+		currentPlayer = (currentPlayer == Color.WHITE)? Color.BLACK : Color.WHITE;
 	}
 	
 	// Método que recebe as coordenadas do xadrez.
