@@ -14,6 +14,11 @@ public abstract class ChessPiece extends Piece{
 		super(board);
 		this.color = color;
 	}
+	
+	// Método que retorna uma peça no formato do xadrez.
+	public ChessPosition getChessPosition() {
+		return ChessPosition.fromPosition(position);
+	}
 
 	// Método Getter para acessar o atributo color.
 	public Color getColor() {

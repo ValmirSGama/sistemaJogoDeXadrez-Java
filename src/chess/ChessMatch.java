@@ -2,6 +2,7 @@ package chess;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import boardGame.Board;
 import boardGame.Piece;
@@ -15,6 +16,7 @@ public class ChessMatch {
 	private int turn;
 	private Color currentPlayer;
 	private Board board; // Atributo do tipo classe "Board".
+	private boolean check;
 
 	// Instanciação de listas para peças no tabuleiro e peças capturadas respectivamente.
 	private List<Piece> piecesOnTheBoard = new ArrayList<>();
@@ -28,13 +30,17 @@ public class ChessMatch {
 		initialSetup();
 	}
 	
-	// Métodos Getters para acessar os atributos turn e currentPlayer;
+	// Métodos Getters para acessar os atributos turn currentPlayer e check;
 	public int getTurn() {
 		return turn;
 	}
 	
 	public Color getCurrentPlayer() {
 		return currentPlayer;
+	}
+	
+	public boolean getCheck() {
+		return check;
 	}
 	
 	// Método que retorna a matriz de peças da partida de xadrez.
@@ -62,6 +68,16 @@ public class ChessMatch {
 		validateSourcePosition(source);
 		validateTargetPosition(source, target);
 		Piece capturedPiece = makeMove(source, target);
+		
+		// Condição verificando se colou a si mesmo em cheque.
+		if(testCheck(currentPlayer)) {
+			undoMove(source, target, capturedPiece);
+			throw new ChessException("You can't put yourself in check");
+		}
+		
+		// Expressão ternária para dizer se está ou não em cheque.
+		check = (testCheck(opponent(currentPlayer)))? true : false;
+		
 		nextTurn();
 		return (ChessPiece)capturedPiece;
 	}
@@ -78,6 +94,18 @@ public class ChessMatch {
 		}
 		
 		return capturedPiece;
+	}
+	
+	// Método para desfazer o movimento caso a peça se coloque em cheque.
+	public void undoMove(Position source, Position target, Piece capturedPiece) {
+		Piece p = board.removePiece(target);
+		board.placePiece(p, source);
+		
+		if(capturedPiece != null) {
+			board.placePiece(capturedPiece, target);
+			capturedPieces.remove(capturedPiece);
+			piecesOnTheBoard.add(capturedPiece);
+		}
 	}
 	
 	// Método para validar a posição de origem.
@@ -104,6 +132,35 @@ public class ChessMatch {
 		turn++;
 		// Variável "currentPlayer" recebendo uma expressão conticional ternária.
 		currentPlayer = (currentPlayer == Color.WHITE)? Color.BLACK : Color.WHITE;
+	}
+	
+	// Método para identificar o oponente.
+	private Color opponent(Color color) {
+		return (color == Color.WHITE)? Color.BLACK : Color.WHITE;
+	}
+	
+	// Método para identificar a cor do Rei.
+	private ChessPiece king(Color color) {
+		List<Piece> list = piecesOnTheBoard.stream().filter(x -> ((ChessPiece)x).getColor() == color).collect(Collectors.toList());
+		for(Piece p : list) {
+			if(p instanceof King) {
+				return (ChessPiece)p;
+			}
+		}
+		throw new IllegalStateException("There is no " + color + "King on the board");
+	}
+	
+	// Método que verifica se o rei está em cheque.
+	private boolean testCheck(Color color) {
+		Position kingPosition = king(color).getChessPosition().toPosition();
+		List<Piece> opponentPieces = piecesOnTheBoard.stream().filter(x -> ((ChessPiece)x).getColor() == opponent(color)).collect(Collectors.toList());
+		for(Piece p : opponentPieces) {
+			boolean[][] mat = p.possibleMoves();
+			if(mat[kingPosition.getRow()][kingPosition.getColumn()]) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	// Método que recebe as coordenadas do xadrez.

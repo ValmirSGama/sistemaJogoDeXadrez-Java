@@ -33,7 +33,7 @@ public class ChessPosition {
 	
 	// Método que converte uma posição da matriz para uma posição do xadrez.
 	protected static ChessPosition fromPosition(Position position) {
-		return new ChessPosition((char)('a' - position.getColumn()), 8 - position.getRow());
+		return new ChessPosition((char)('a' + position.getColumn()), 8 - position.getRow());
 	}
 	
 	// Método toString da posição.
