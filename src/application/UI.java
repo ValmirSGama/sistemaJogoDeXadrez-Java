@@ -118,7 +118,7 @@ public class UI {
 	// Método responsável por imprimir a lista de peças capturadas de tederminada cor.
 	public static void printCapturedPieces(List<ChessPiece> captured) {
 		List<ChessPiece> white = captured.stream().filter(x -> x.getColor() == Color.WHITE).collect(Collectors.toList());
-		List<ChessPiece> black = captured.stream().filter(x -> x.getColor() == Color.BLACK).collect(Collectors.toList());
+		List<ChessPiece> yellow = captured.stream().filter(x -> x.getColor() == Color.YELLOW).collect(Collectors.toList());
 		System.out.println("Captured pieces:");
 		System.out.print("White: ");
 		System.out.print(ANSI_WHITE);
@@ -126,9 +126,9 @@ public class UI {
 		System.out.print(ANSI_RESET);
 		
 		System.out.println();
-		System.out.print("Black: ");
+		System.out.print("Yellow: ");
 		System.out.print(ANSI_YELLOW);
-		System.out.print(Arrays.toString(black.toArray()));
+		System.out.print(Arrays.toString(yellow.toArray()));
 		System.out.print(ANSI_RESET);
 	}
 }
