@@ -2,15 +2,20 @@ package chess.pieces;
 
 import boardGame.Board;
 import boardGame.Position;
+import chess.ChessMatch;
 import chess.ChessPiece;
 import chess.Color;
 
 //Declarando a classe: peça Rei do xadrez.
 public class King extends ChessPiece{
+	
+	// Dependencia para a partida.
+	private ChessMatch chessMatch;
 
-	// Construtor informando o tabuleiro e a cor da peça.
-	public King(Board board, Color color) {
+	// Construtor informando o tabuleiro, a cor da peça e Dependencia para a partida.
+	public King(Board board, Color color, ChessMatch chessMatch) {
 		super(board, color);
+		this.chessMatch = chessMatch;
 	}
 	
 	// Método toString para retornar o Rei.
@@ -23,6 +28,12 @@ public class King extends ChessPiece{
 	private boolean canMove(Position position) {
 		ChessPiece p = (ChessPiece)getBoard().piece(position);
 		return p == null || p.getColor() != getColor();
+	}
+	
+	// Método que testa a condição de rock com a torre.
+	private boolean testRookCastling(Position position) {
+		ChessPiece p = (ChessPiece)getBoard().piece(position);
+		return p != null && p instanceof Rook && p.getColor() == getColor() && p.getMoveCount() == 0;
 	}
 
 	// Sobreposição e implementação do método possibleMoves da classe Piece.
@@ -78,6 +89,31 @@ public class King extends ChessPiece{
 		p.setValues(position.getRow() + 1, position.getColumn() + 1);
 		if(getBoard().positionExists(p) && canMove(p)) {
 			mat[p.getRow()][p.getColumn()] = true;
+		}
+		
+		// Verificando a condição do rei para o movimento de roque.
+		if(getMoveCount() == 0 && !chessMatch.getCheck()) {
+			// Roque pequeno do lado do Rei.
+			Position posTorre1 = new Position(position.getRow(), position.getColumn() + 3);
+			if(testRookCastling(posTorre1)) {
+				// Testando se as casas do lado direito estão vazias.
+				Position p1 = new Position(position.getRow(), position.getColumn() + 1);
+				Position p2 = new Position(position.getRow(), position.getColumn() + 2);
+				if(getBoard().piece(p1) == null && getBoard().piece(p2) == null) {
+					mat[position.getRow()][position.getColumn() + 2] = true;
+				}
+			}
+			// Roque grande do lado do Rainha.
+			Position posTorre2 = new Position(position.getRow(), position.getColumn() - 4);
+			if(testRookCastling(posTorre2)) {
+				// Testando se as casas do lado direito estão vazias.
+				Position p1 = new Position(position.getRow(), position.getColumn() - 1);
+				Position p2 = new Position(position.getRow(), position.getColumn() - 2);
+				Position p3 = new Position(position.getRow(), position.getColumn() - 3);
+				if(getBoard().piece(p1) == null && getBoard().piece(p2) == null && getBoard().piece(p3) == null) {
+					mat[position.getRow()][position.getColumn() - 2] = true;
+				}
+			}
 		}
 
 		return mat;

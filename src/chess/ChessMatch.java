@@ -111,6 +111,24 @@ public class ChessMatch {
 			capturedPieces.add(capturedPiece);
 		}
 		
+		// Movimento especial de roque do lado do Rei.
+		if(p instanceof King && target.getColumn() == source.getColumn() + 2) {
+			Position sourceTorre = new Position(source.getRow(), source.getColumn() + 3);
+			Position targetTorre = new Position(source.getRow(), source.getColumn() + 1);
+			ChessPiece rook = (ChessPiece)board.removePiece(sourceTorre);
+			board.placePiece(rook, targetTorre);
+			rook.increaseMoveCount();
+		}
+		
+		// Movimento especial de roque do lado do Rainha.
+		if(p instanceof King && target.getColumn() == source.getColumn() - 2) {
+			Position sourceTorre = new Position(source.getRow(), source.getColumn() - 4);
+			Position targetTorre = new Position(source.getRow(), source.getColumn() - 1);
+			ChessPiece rook = (ChessPiece)board.removePiece(sourceTorre);
+			board.placePiece(rook, targetTorre);
+			rook.increaseMoveCount();
+		}
+		
 		return capturedPiece;
 	}
 	
@@ -125,6 +143,24 @@ public class ChessMatch {
 			capturedPieces.remove(capturedPiece);
 			piecesOnTheBoard.add(capturedPiece);
 		}
+		
+		// Desfazendo o movimento de roque do lado do Rei.
+		if(p instanceof King && target.getColumn() == source.getColumn() + 2) {
+			Position sourceTorre = new Position(source.getRow(), source.getColumn() + 3);
+			Position targetTorre = new Position(source.getRow(), source.getColumn() + 1);
+			ChessPiece rook = (ChessPiece)board.removePiece(targetTorre);
+			board.placePiece(rook, sourceTorre);
+			rook.decreaseMoveCount();
+		}
+		
+		// Desfazendo o movimento de roque do lado do Rainha.
+		if(p instanceof King && target.getColumn() == source.getColumn() - 2) {
+			Position sourceTorre = new Position(source.getRow(), source.getColumn() - 4);
+			Position targetTorre = new Position(source.getRow(), source.getColumn() - 1);
+			ChessPiece rook = (ChessPiece)board.removePiece(targetTorre);
+			board.placePiece(rook, sourceTorre);
+			rook.decreaseMoveCount();
+		}	
 	}
 	
 	// Método para validar a posição de origem.
@@ -220,7 +256,7 @@ public class ChessMatch {
 		placeNewPiece('b', 1, new Knight(board, Color.WHITE));
 		placeNewPiece('c', 1, new Bishop(board, Color.WHITE));
 		placeNewPiece('d', 1, new Queen(board, Color.WHITE));
-		placeNewPiece('e', 1, new King(board, Color.WHITE));
+		placeNewPiece('e', 1, new King(board, Color.WHITE, this));
 		placeNewPiece('f', 1, new Bishop(board, Color.WHITE));
 		placeNewPiece('g', 1, new Knight(board, Color.WHITE));
         placeNewPiece('h', 1, new Rook(board, Color.WHITE));
@@ -237,7 +273,7 @@ public class ChessMatch {
         placeNewPiece('b', 8, new Knight(board, Color.YELLOW));
         placeNewPiece('c', 8, new Bishop(board, Color.YELLOW));
     	placeNewPiece('d', 8, new Queen(board, Color.YELLOW));
-        placeNewPiece('e', 8, new King(board, Color.YELLOW));
+        placeNewPiece('e', 8, new King(board, Color.YELLOW, this));
         placeNewPiece('f', 8, new Bishop(board, Color.YELLOW));
         placeNewPiece('g', 8, new Knight(board, Color.YELLOW));
         placeNewPiece('h', 8, new Rook(board, Color.YELLOW));
