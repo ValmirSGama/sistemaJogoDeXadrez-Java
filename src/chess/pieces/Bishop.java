@@ -13,7 +13,7 @@ public class Bishop extends ChessPiece{
 		super(board, color);
 	}
 	
-	// Método toString para retornar a Torre.
+	// Método toString para retornar a Bishop.
 	@Override
 	public String toString() {
 		return "B";

@@ -9,6 +9,7 @@ import boardGame.Piece;
 import boardGame.Position;
 import chess.pieces.Bishop;
 import chess.pieces.King;
+import chess.pieces.Knight;
 import chess.pieces.Pawn;
 import chess.pieces.Rook;
 
@@ -171,9 +172,9 @@ public class ChessMatch {
 	private boolean testCheck(Color color) {
 		Position kingPosition = king(color).getChessPosition().toPosition();
 		List<Piece> opponentPieces = piecesOnTheBoard.stream().filter(x -> ((ChessPiece)x).getColor() == opponent(color)).collect(Collectors.toList());
-		for(Piece p : opponentPieces) {
+		for (Piece p : opponentPieces) {
 			boolean[][] mat = p.possibleMoves();
-			if(mat[kingPosition.getRow()][kingPosition.getColumn()]) {
+			if (mat[kingPosition.getRow()][kingPosition.getColumn()]) {
 				return true;
 			}
 		}
@@ -182,21 +183,21 @@ public class ChessMatch {
 	
 	// Método que verifica se o rei está em chequemate.
 	private boolean testCheckMate(Color color) {
-		if(!testCheck(color)) {
+		if (!testCheck(color)) {
 			return false;
 		}
 		List<Piece> list = piecesOnTheBoard.stream().filter(x -> ((ChessPiece)x).getColor() == color).collect(Collectors.toList());
-		for(Piece p : list) {
+		for (Piece p : list) {
 			boolean[][] mat = p.possibleMoves();
-			for(int i=0; i<board.getRows(); i++) {
-				for(int j=0; j<board.getColumns(); j++) {
-					if(mat[i][j]) {
+			for (int i=0; i<board.getRows(); i++) {
+				for (int j=0; j<board.getColumns(); j++) {
+					if (mat[i][j]) {
 						Position source = ((ChessPiece)p).getChessPosition().toPosition();
 						Position target = new Position(i, j);
 						Piece capturedPiece = makeMove(source, target);
 						boolean testCheck = testCheck(color);
 						undoMove(source, target, capturedPiece);
-						if(!testCheck) {
+						if (!testCheck) {
 							return false;
 						}
 					}
@@ -215,9 +216,11 @@ public class ChessMatch {
 	// Método responsável por iniciar a partida de xadrez.
 	private void initialSetup() {
 		placeNewPiece('a', 1, new Rook(board, Color.WHITE));
+		placeNewPiece('b', 1, new Knight(board, Color.WHITE));
 		placeNewPiece('c', 1, new Bishop(board, Color.WHITE));
 		placeNewPiece('e', 1, new King(board, Color.WHITE));
 		placeNewPiece('f', 1, new Bishop(board, Color.WHITE));
+		placeNewPiece('g', 1, new Knight(board, Color.WHITE));
         placeNewPiece('h', 1, new Rook(board, Color.WHITE));
         placeNewPiece('a', 2, new Pawn(board, Color.WHITE));
         placeNewPiece('b', 2, new Pawn(board, Color.WHITE));
@@ -229,9 +232,11 @@ public class ChessMatch {
         placeNewPiece('h', 2, new Pawn(board, Color.WHITE));
 
         placeNewPiece('a', 8, new Rook(board, Color.YELLOW));
+        placeNewPiece('b', 8, new Knight(board, Color.YELLOW));
         placeNewPiece('c', 8, new Bishop(board, Color.YELLOW));
         placeNewPiece('e', 8, new King(board, Color.YELLOW));
         placeNewPiece('f', 8, new Bishop(board, Color.YELLOW));
+        placeNewPiece('g', 8, new Knight(board, Color.YELLOW));
         placeNewPiece('h', 8, new Rook(board, Color.YELLOW));
         placeNewPiece('a', 7, new Pawn(board, Color.YELLOW));
         placeNewPiece('b', 7, new Pawn(board, Color.YELLOW));
