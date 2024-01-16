@@ -14,10 +14,10 @@ public class Knight extends ChessPiece{
 		super(board, color);
 	}
 	
-	// Método toString para retornar o Knight/Horseman.
+	// Método toString para retornar o Knight/cavalier.
 	@Override
 	public String toString() {
-		return "H";
+		return "C";
 	}
 	
 	// Método que verifica se pode mover o Cavaleiro.
