@@ -2,15 +2,18 @@ package chess.pieces;
 
 import boardGame.Board;
 import boardGame.Position;
+import chess.ChessMatch;
 import chess.ChessPiece;
 import chess.Color;
 
 public class Pawn extends ChessPiece{
 
-	// Construtor recebendo como argumentos "board" e "color". 
-	public Pawn(Board board, Color color) {
+	private ChessMatch chessMatch;
+	
+	// Construtor recebendo como argumentos "board", "color" e "chessMatch". 
+	public Pawn(Board board, Color color,ChessMatch chessMatch) {
 		super(board, color);
-		
+		this.chessMatch = chessMatch;
 	}
 
 	// Sobreposição do método possibleMoves da classe Piece.
@@ -42,6 +45,19 @@ public class Pawn extends ChessPiece{
 			if(getBoard().positionExists(p) && isThereOpponentPiece(p)) {
 				mat[p.getRow()][p.getColumn()] = true;
 			}
+			
+			// Movimento especial en passant à esquerda.
+			if(position.getRow() == 3) {
+				Position left = new Position(position.getRow(), position.getColumn() - 1);
+				if(getBoard().positionExists(left) && isThereOpponentPiece(left) && getBoard().piece(left) == chessMatch.getenPassantVulnerable()){
+					mat[left.getRow() - 1][left.getColumn()] = true;
+				}
+				// Movimento especial en passant à direita.
+				Position right = new Position(position.getRow(), position.getColumn() + 1);
+				if(getBoard().positionExists(right) && isThereOpponentPiece(right) && getBoard().piece(right) == chessMatch.getenPassantVulnerable()){
+					mat[right.getRow() - 1][right.getColumn()] = true;
+				}
+			}
 		}
 		else { // Então cor preta.
 			// Teste da regra de movimentação de uma linha à frente.
@@ -64,6 +80,19 @@ public class Pawn extends ChessPiece{
 			p.setValues(position.getRow() + 1, position.getColumn() + 1);
 			if(getBoard().positionExists(p) && isThereOpponentPiece(p)) {
 				mat[p.getRow()][p.getColumn()] = true;
+			}
+			
+			// Movimento especial en passant à esquerda.
+			if(position.getRow() == 4) {
+				Position left = new Position(position.getRow(), position.getColumn() - 1);
+				if(getBoard().positionExists(left) && isThereOpponentPiece(left) && getBoard().piece(left) == chessMatch.getenPassantVulnerable()){
+					mat[left.getRow() + 1][left.getColumn()] = true;
+				}
+				// Movimento especial en passant à direita.
+				Position right = new Position(position.getRow(), position.getColumn() + 1);
+				if(getBoard().positionExists(right) && isThereOpponentPiece(right) && getBoard().piece(right) == chessMatch.getenPassantVulnerable()){
+					mat[right.getRow() + 1][right.getColumn()] = true;
+				}
 			}
 		}
 		
