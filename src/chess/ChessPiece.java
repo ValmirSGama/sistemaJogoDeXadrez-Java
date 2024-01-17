@@ -31,12 +31,12 @@ public abstract class ChessPiece extends Piece{
 	}
 	
 	// Método para incrementar o movimento das peças.
-	public void increaseMoveCount() {
+	protected void increaseMoveCount() {
 		moveCount++;
 	}
 	
 	// Método para decrementar o movimento das peças.
-	public void decreaseMoveCount() {
+	protected void decreaseMoveCount() {
 		moveCount--;
 	}
 	
