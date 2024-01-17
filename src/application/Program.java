@@ -47,9 +47,11 @@ public class Program {
 				// Condição para testar se uma peça foi promovida.
 				if(chessMatch.getPromoted() != null) {
 					System.out.print("Enter piece for promotion (R/C/B/Q): ");
-					String type = sc.nextLine();
-					// Converte a string para maiúsculas.
-					type = type.toUpperCase();
+					String type = sc.nextLine().toUpperCase();
+					while(!type.equals("R") && !type.equals("C") && !type.equals("B") && !type.equals("Q")) {
+						System.out.print("Invalid value! Enter piece for promotion (R/C/B/Q): ");
+						type = sc.nextLine().toUpperCase();
+					}
 					chessMatch.replacePromotedPiece(type);
 				}
 			}
