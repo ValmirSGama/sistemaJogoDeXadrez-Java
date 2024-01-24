@@ -28,9 +28,27 @@ O sistema foi subdividido em quatro pacotes e dezessete classes, sendo que estas
 ### Configuração:
 
 - Fazer um Fork no github ou clonar o repositório via terminal.
+- O projeto está sem o executável(.class) que reside na pasta bin. para gerá-los, é preciso executar em uma IDE de sua escolha.
+- Na segunda vez que for executar o jogo, você pode rodá-lo diretamente do diretório do mesmo, dentro da pasta 'bin', que foi gerada anteriormente pela IDE. Se você tiver o Git instalado em sua máquina, caso não tenha, você pode baixá-lo neste link: https://git-scm.com/.
+
+#### Clonando através do Visual Studio Code (VSCode), por exemplo:
+
+#### 1. Certifique-se de ter o VSCode instalado em sua máquina.
+- Abra o Visual Studio Code.
+#### 2. Abra a paleta de comandos:
+- Pressione Ctrl + Shift + P (ou Cmd + Shift + P no macOS) para abrir a paleta de comandos.
+#### 3. Digite "Git: Clone" na paleta de comandos:
+- selecione a opção correspondente quando ela aparecer.
+#### 4. Forneça o URL do repositório:
+- O VSCode solicitará que você insira o URL do repositório. Cole esse URL: https://github.com/ValmirSGama/sistemaJogoDeXadrex-Java e pressione Enter.
+#### 5. Escolha o diretório de destino:
+- O VSCode perguntará onde você deseja salvar o repositório clonado. Selecione o diretório desejado e clique em "Selecionar Repositório de Destino".
+#### 6. Abra o repositório clonado:
+- Após o clone ser concluído, você pode abrir o repositório clicando no botão "Abrir" na notificação de clone concluído ou usando o explorador de arquivos no lado esquerdo do VSCode para navegar até o diretório do repositório clonado e abrir.
 
 ### Como Executar:
-Execute preferencialmente no "git Bash", pois as cores padrão dos jogadores (preto e branco) foram modificadas, sendo uma delas alterada de preto para amarelo para proporcionar um melhor contraste visual com o fundo preto do terminal. Abra o terminal do git Bash ao estar dentro da pasta bin do projeto e inicie o jogo com o comando: java application/Program
+- Execute preferencialmente em um terminal de fundo preto, pois as cores padrão dos jogadores (preto e branco) foram modificadas, sendo uma delas alterada de preto para amarelo para proporcionar uma melhor harmonia visual. 
+- Ao execulta pela segunbda vez, se preferir utilizar o terminal do git Bash, navegue até a pasta bin do projeto, dentro dela, click com o botão direito do mouse e depois escolha a opção: Open Git Bash here, então, dentro do terminal, inicie o jogo com o comando: java application/Program.
 
 ### Funcionalidades:
 O jogo conta com todas as funcionalidades básicas do xadrez, incluindo os movimentos especiais como Castling, En Passant e Promotion. O tabuleiro foi programado para mostrar em azul as possíveis jogadas de cada peça quando acionada. Os jogadores podem ser identificados pelas iniciais do nome em inglês, tais como:
