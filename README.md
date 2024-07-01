@@ -2,6 +2,9 @@
 
 Este sistema foi desenvolvido aplicando os conceitos de Orientação a Objetos em Java, tais como:
 
+![GitHub top language](https://img.shields.io/github/languages/top/ValmirSGama/sistemaJogoDeXadrex-Java)
+![GitHub repo size](https://img.shields.io/github/repo-size/ValmirSGama/sistemaJogoDeXadrex-Java)
+
 - Encapsulamento
 - Modificadores de acesso
 - Construtores
