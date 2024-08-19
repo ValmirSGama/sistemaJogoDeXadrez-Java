@@ -1,9 +1,11 @@
-## Projeto: Sistema de Jogo de Xadrez
+<h1 align="center">Projeto: Sistema de Jogo de Xadrez</h1>
 
-Este sistema foi desenvolvido aplicando os conceitos de Orientação a Objetos em Java, tais como:
-
+#### Autor:
+[![Valmir Sales](https://img.shields.io/badge/Valmir%20Sales%20Gama-gray?style=flat-square&logo=github&logoColor=white&logoWidth=20&link=https://github.com/ValmirSGama)](https://github.com/ValmirSGama)
 ![GitHub top language](https://img.shields.io/github/languages/top/ValmirSGama/sistemaJogoDeXadrex-Java)
 ![GitHub repo size](https://img.shields.io/github/repo-size/ValmirSGama/sistemaJogoDeXadrex-Java)
+
+Este sistema foi desenvolvido aplicando os conceitos de Orientação a Objetos em Java, tais como:
 
 - Encapsulamento
 - Modificadores de acesso
@@ -53,6 +55,9 @@ O sistema foi subdividido em quatro pacotes e dezessete classes, sendo que estas
 - Execute preferencialmente em um terminal de fundo preto, pois as cores padrão dos jogadores (preto e branco) foram modificadas, sendo uma delas alterada de preto para amarelo para proporcionar uma melhor harmonia visual. 
 - Ao execulta pela segunbda vez, se preferir utilizar o terminal do git Bash, navegue até a pasta bin do projeto, dentro dela, click com o botão direito do mouse e depois escolha a opção: Open Git Bash here, então, dentro do terminal, inicie o jogo com o comando: java application/Program.
 
+### Interface do Jogo:
+![Interface do Jogo](Chess-system-class-diagram/Interface%20do%20jogo.png)
+
 ### Funcionalidades:
 O jogo conta com todas as funcionalidades básicas do xadrez, incluindo os movimentos especiais como Castling, En Passant e Promotion. O tabuleiro foi programado para mostrar em azul as possíveis jogadas de cada peça quando acionada. Os jogadores podem ser identificados pelas iniciais do nome em inglês, tais como:
 
@@ -84,3 +89,7 @@ O jogo conta com todas as funcionalidades básicas do xadrez, incluindo os movim
 - Nesse momento, o peão é promovido a qualquer peça de escolha do jogador (exceto um rei).
 - A escolha geralmente é entre uma rainha, torre, bispo ou cavalo.
 - A promoção permite que peões atinjam seu potencial máximo, já que eles podem se transformar em peças mais poderosas.
+
+---
+
+### Projeto realizado no curso de Java Completo com Nélio Alves
